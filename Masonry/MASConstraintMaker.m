@@ -238,7 +238,9 @@
 - (MASConstraint *(^)(dispatch_block_t group))group {
     return ^id(dispatch_block_t group) {
         NSInteger previousCount = self.constraints.count;
-        group();
+        if (nil != group) {
+            group();
+        }
 
         NSArray *children = [self.constraints subarrayWithRange:NSMakeRange(previousCount, self.constraints.count - previousCount)];
         MASCompositeConstraint *constraint = [[MASCompositeConstraint alloc] initWithChildren:children];

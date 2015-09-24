@@ -11,7 +11,7 @@
 
 @implementation NSArray (MASAdditions)
 
-- (NSArray *)mas_makeConstraints:(void(^)(MASConstraintMaker *make))block {
+- (NSArray *)mas_makeConstraints:(void(^)(MASConstraintMaker *make, MAS_VIEW *superview))block {
     NSMutableArray *constraints = [NSMutableArray array];
     for (MAS_VIEW *view in self) {
         NSAssert([view isKindOfClass:[MAS_VIEW class]], @"All objects in the array must be views");
@@ -20,7 +20,7 @@
     return constraints;
 }
 
-- (NSArray *)mas_updateConstraints:(void(^)(MASConstraintMaker *make))block {
+- (NSArray *)mas_updateConstraints:(void(^)(MASConstraintMaker *make, MAS_VIEW *superview))block {
     NSMutableArray *constraints = [NSMutableArray array];
     for (MAS_VIEW *view in self) {
         NSAssert([view isKindOfClass:[MAS_VIEW class]], @"All objects in the array must be views");
@@ -29,7 +29,7 @@
     return constraints;
 }
 
-- (NSArray *)mas_remakeConstraints:(void(^)(MASConstraintMaker *make))block {
+- (NSArray *)mas_remakeConstraints:(void(^)(MASConstraintMaker *make, MAS_VIEW *superview))block {
     NSMutableArray *constraints = [NSMutableArray array];
     for (MAS_VIEW *view in self) {
         NSAssert([view isKindOfClass:[MAS_VIEW class]], @"All objects in the array must be views");
@@ -49,7 +49,7 @@
         MAS_VIEW *prev;
         for (int i = 0; i < self.count; i++) {
             MAS_VIEW *v = [self objectAtIndex:i];
-            [v mas_makeConstraints:^(MASConstraintMaker *make) {
+            [v mas_makeConstraints:^(MASConstraintMaker *make, MAS_VIEW *superview) {
                 if (prev) {
                     make.width.equalTo(prev);
                     make.left.equalTo(prev.mas_right).offset(fixedSpacing);
@@ -69,7 +69,7 @@
         MAS_VIEW *prev;
         for (int i = 0; i < self.count; i++) {
             MAS_VIEW *v = [self objectAtIndex:i];
-            [v mas_makeConstraints:^(MASConstraintMaker *make) {
+            [v mas_makeConstraints:^(MASConstraintMaker *make, MAS_VIEW *superview) {
                 if (prev) {
                     make.height.equalTo(prev);
                     make.top.equalTo(prev.mas_bottom).offset(fixedSpacing);
@@ -98,7 +98,7 @@
         MAS_VIEW *prev;
         for (int i = 0; i < self.count; i++) {
             MAS_VIEW *v = [self objectAtIndex:i];
-            [v mas_makeConstraints:^(MASConstraintMaker *make) {
+            [v mas_makeConstraints:^(MASConstraintMaker *make, MAS_VIEW *superview) {
                 if (prev) {
                     CGFloat offset = (1-(i/((CGFloat)self.count-1)))*(fixedItemLength+leadSpacing)-i*tailSpacing/(((CGFloat)self.count-1));
                     make.width.equalTo(@(fixedItemLength));
@@ -121,7 +121,7 @@
         MAS_VIEW *prev;
         for (int i = 0; i < self.count; i++) {
             MAS_VIEW *v = [self objectAtIndex:i];
-            [v mas_makeConstraints:^(MASConstraintMaker *make) {
+            [v mas_makeConstraints:^(MASConstraintMaker *make, MAS_VIEW *superview) {
                 if (prev) {
                     CGFloat offset = (1-(i/((CGFloat)self.count-1)))*(fixedItemLength+leadSpacing)-i*tailSpacing/(((CGFloat)self.count-1));
                     make.height.equalTo(@(fixedItemLength));

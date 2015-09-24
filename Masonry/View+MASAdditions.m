@@ -11,26 +11,32 @@
 
 @implementation MAS_VIEW (MASAdditions)
 
-- (NSArray *)mas_makeConstraints:(void(^)(MASConstraintMaker *))block {
+- (NSArray *)mas_makeConstraints:(void(^)(MASConstraintMaker *make, MAS_VIEW *superview))block {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     MASConstraintMaker *constraintMaker = [[MASConstraintMaker alloc] initWithView:self];
-    block(constraintMaker);
+    if (nil != block) {
+        block(constraintMaker, self.superview);
+    }
     return [constraintMaker install];
 }
 
-- (NSArray *)mas_updateConstraints:(void(^)(MASConstraintMaker *))block {
+- (NSArray *)mas_updateConstraints:(void(^)(MASConstraintMaker *make, MAS_VIEW *superview))block {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     MASConstraintMaker *constraintMaker = [[MASConstraintMaker alloc] initWithView:self];
     constraintMaker.updateExisting = YES;
-    block(constraintMaker);
+    if (nil != block) {
+        block(constraintMaker, self.superview);
+    }
     return [constraintMaker install];
 }
 
-- (NSArray *)mas_remakeConstraints:(void(^)(MASConstraintMaker *make))block {
+- (NSArray *)mas_remakeConstraints:(void(^)(MASConstraintMaker *make, MAS_VIEW *superview))block {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     MASConstraintMaker *constraintMaker = [[MASConstraintMaker alloc] initWithView:self];
     constraintMaker.removeExisting = YES;
-    block(constraintMaker);
+    if (nil != block) {
+        block(constraintMaker, self.superview);
+    }
     return [constraintMaker install];
 }
 

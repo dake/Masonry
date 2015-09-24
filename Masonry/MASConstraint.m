@@ -132,15 +132,15 @@
     if ([value isKindOfClass:NSNumber.class]) {
         self.offset = [(NSNumber *)value doubleValue];
     } else if (strcmp(value.objCType, @encode(CGPoint)) == 0) {
-        CGPoint point;
+        CGPoint point = CGPointZero;
         [value getValue:&point];
         self.centerOffset = point;
     } else if (strcmp(value.objCType, @encode(CGSize)) == 0) {
-        CGSize size;
+        CGSize size = CGSizeZero;
         [value getValue:&size];
         self.sizeOffset = size;
     } else if (strcmp(value.objCType, @encode(MASEdgeInsets)) == 0) {
-        MASEdgeInsets insets;
+        MASEdgeInsets insets = UIEdgeInsetsZero;
         [value getValue:&insets];
         self.insets = insets;
     } else {
