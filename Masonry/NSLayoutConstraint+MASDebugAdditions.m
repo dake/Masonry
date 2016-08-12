@@ -125,7 +125,7 @@
     if (self.secondAttribute == NSLayoutAttributeNotAnAttribute) {
         [description appendFormat:@" %g", self.constant];
     } else {
-        if (self.constant) {
+        if (self.constant != 0) {
             [description appendFormat:@" %@ %g", (self.constant < 0 ? @"-" : @"+"), ABS(self.constant)];
         }
     }
